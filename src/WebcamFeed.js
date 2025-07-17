@@ -23,7 +23,7 @@ const WebcamFeed = () => {
   }
 
   useEffect(() => {
-    if (!workoutStarted) return; // Wait until button is clicked
+    if (!workoutStarted) return;
 
     const pose = new Pose({
       locateFile: (file) =>
@@ -111,15 +111,23 @@ const WebcamFeed = () => {
     };
 
     runPose();
-  }, [workoutStarted]); // 👈 Add workoutStarted as dependency
+  }, [workoutStarted]);
 
   const handleStart = () => {
     setWorkoutStarted(true);
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      {!workoutStarted && (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#f8f8f8",
+      }}
+    >
+      {!workoutStarted ? (
         <button
           onClick={handleStart}
           style={{
@@ -134,17 +142,8 @@ const WebcamFeed = () => {
         >
           Start Workout
         </button>
-      )}
-
-      {workoutStarted && (
-        <div
-          style={{
-            position: "relative",
-            width: 640,
-            height: 480,
-            margin: "auto",
-          }}
-        >
+      ) : (
+        <div style={{ position: "relative", width: 640, height: 480 }}>
           <Webcam
             ref={webcamRef}
             audio={false}
